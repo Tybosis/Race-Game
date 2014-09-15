@@ -1,0 +1,74 @@
+<script>
+  //defining the Animal object with a constructor function
+  function Racer(name, speed, focus) {
+    this.name = name;
+    this.speed = speed;
+    this.focus = focus;
+    this.position = 0
+    //method that allows the Animal object to change position
+    this.move = function() {
+      if((Math.floor(Math.random() * 10) + 1) < this.focus) {
+        this.position += this.speed;
+      }
+      return this.position;
+    }
+    this.currentPosition = function() {
+      return this.name + " has completed " + this.position + " laps!";
+      }
+  }
+  
+  //defining a function that starts the game!
+  var runRace = function () {
+  //creating new racers using the Animal object
+    var mario = new Racer("Mario", 5, 5);
+    var luigi = new Racer("Luigi", 6, 4);
+    var bowser = new Racer("bowser", 4, 8);
+    var toad = new Racer("Toad", 9, 3);
+    //confirm the user wants to play
+    var start = confirm("Are you ready to race?");
+    //allow user to set number of laps
+    
+    if(start) {
+      //setting the distance of the race
+      var laps = prompt("How many laps do you want to run?");
+      //while loop that runs until one or more racers wins
+      while(start) {
+        mario.move();
+        luigi.move();
+        bowser.move();
+        toad.move();
+        //logging the progress of the race
+        document.write(mario.currentPosition() + " | " + luigi.currentPosition() + " | "
+        + bowser.currentPosition() + " | " + toad.currentPosition() + '<br />');
+        //super long if statement to determin if the race ended in a tie
+        if((mario.position >= laps && luigi.position >= laps) || (mario.position >= laps && bowser.position >= laps) || (mario.position >= laps && toad.position >= laps) || (luigi.position >= laps && bowser.position >= laps) || (luigi.position >= laps && toad.position >= laps) || (bowser.position >= laps && toad.position >= laps)) {
+          alert("The race ended in a tie!");
+          start = false;
+        } else if(luigi.position >= laps) {
+          alert("Luigi wins!");
+          start = false;
+        } else if(bowser.position >= laps) {
+          alert("Bowser wins!");
+          start = false;
+        } else if(toad.position >= laps) {
+          alert("Toad wins!");
+          start = false;
+        } else if(mario.position >= laps) {
+          alert("Mario wins!");
+          start = false;
+        }
+      }
+    }
+  }; 
+
+  var playAgain = function() {
+    var play = confirm("Do you want to play again?");
+    if(play) {
+      runRace();
+      playAgain();
+    }
+  };
+  runRace();
+  playAgain();
+</script>
+
